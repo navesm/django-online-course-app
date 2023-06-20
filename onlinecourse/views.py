@@ -86,7 +86,13 @@ class CourseListView(generic.ListView):
 
 class CourseDetailView(generic.DetailView):
     model = Course
+    questions = Question.objects.all()
     template_name = 'onlinecourse/course_detail_bootstrap.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['questions'] = Question.objects.all()
+        return context
 
 
 def enroll(request, course_id):
