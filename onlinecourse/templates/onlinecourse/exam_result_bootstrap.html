@@ -49,6 +49,19 @@
         <div class="card-columns-vertical mt-1">
         <h5 class="">Exam results</h5>
             <!--HINT Display exam results-->
+            <ul class="list-group">
+                <li class="list-group-item active">Total Score: {{ grade }}/100</li>
+                {% for question in course.question_set.all %}
+                    <li class="list-group-item">
+                        <strong>{{ question.question_text }}</strong><br>
+                        {% if question.is_get_score(selected_ids) %}
+                            <span class="text-success">Correct</span>
+                        {% else %}
+                            <span class="text-danger">Incorrect</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </body>
