@@ -162,13 +162,16 @@ def show_exam_result(request, course_id, submission_id):
 
     for question in course.question_set.all():
         correct_choices = question.choice_set.filter(is_correct=True)
-        if selected_ids in correct_choices:
+        if set(selected_ids).issuperset(correct_choices.values_list('id', flat=True)):
             total_score += question.grade_point
+
+    percentage_correct = (total_score / total_questions) * 100
+    grade = int(percentage_correct)
 
     context = {
         'course': course,
         'selected_ids': selected_ids,
-        'grade': (int((total_score/total_questions)) *100),
+        'grade': grade,
     }
 
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)

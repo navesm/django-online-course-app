@@ -43,6 +43,7 @@
         {% else %}
         <div class="alert alert-danger">
             <!--HINT Display failed info -->
+            <strong>Failed</strong> Sorry, {{user}}! You have failed with score {{grade}}/100
         </div>
         <a class="btn btn-link text-danger" href="{% url 'onlinecourse:course_details' course.id %}">Re-test</a>
         {% endif %}
@@ -50,17 +51,14 @@
         <h5 class="">Exam results</h5>
             <!--HINT Display exam results-->
             <ul class="list-group">
-                <li class="list-group-item active">Total Score: {{ grade }}/100</li>
+                <li class="list-group-item active"></li>
                 {% for question in course.question_set.all %}
                     <li class="list-group-item">
                         <strong>{{ question.question_text }}</strong><br>
-                        {% with question.is_get_score as is_correct %}
-                        {% if is_correct %}
+                        
                             <span class="text-success">Correct</span>
-                        {% else %}
                             <span class="text-danger">Incorrect</span>
-                        {% endif %}
-                        {% endwith %}
+                        
                     </li>
                 {% endfor %}
             </ul>
