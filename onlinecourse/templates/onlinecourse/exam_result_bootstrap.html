@@ -39,6 +39,7 @@
     {% if grade > 80 %}
     <div class="alert alert-success">
        <!--HINT Display passed info -->
+       <strong>Congratulations, {{user}}!</strong> You have passed the exam and completed the course with score {{grade}}/100
     </div>
         {% else %}
         <div class="alert alert-danger">
@@ -55,10 +56,15 @@
                 {% for question in course.question_set.all %}
                     <li class="list-group-item">
                         <strong>{{ question.question_text }}</strong><br>
-                        
-                            <span class="text-success">Correct</span>
-                            <span class="text-danger">Incorrect</span>
-                        
+                        {% for choice in question.choice_set.all %}
+                            {% if choice.is_correct%}
+                            <span class="text-success">Correct answer: {{choice.choice_text}}</span>
+                            <br>
+                            {% else %}
+                            {{choice.choice_text}}
+                            <br>
+                            {% endif %}
+                        {% endfor %}
                     </li>
                 {% endfor %}
             </ul>
