@@ -158,19 +158,20 @@ def show_exam_result(request, course_id, submission_id):
 
     selected_ids = submission.choices.values_list('id', flat=True)
     total_score = 0
+    total_questions = course.question_set.all().count()
 
     for question in course.question_set.all():
         correct_choices = question.choice_set.filter(is_correct=True)
-        if set(selected_ids).issuperset(correct_choices.values_list('id', flat=True)):
+        if selected_ids in correct_choices:
             total_score += question.grade_point
 
     context = {
         'course': course,
         'selected_ids': selected_ids,
-        'grade': total_score,
+        'grade': (int((total_score/total_questions)) *100),
     }
 
-    return render(request, 'onlinecourse/exam_result.html', context)
+    return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
 
 
 

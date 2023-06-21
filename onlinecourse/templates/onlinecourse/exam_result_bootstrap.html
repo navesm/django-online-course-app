@@ -54,11 +54,13 @@
                 {% for question in course.question_set.all %}
                     <li class="list-group-item">
                         <strong>{{ question.question_text }}</strong><br>
-                        {% if question.is_get_score(selected_ids) %}
+                        {% with question.is_get_score as is_correct %}
+                        {% if is_correct %}
                             <span class="text-success">Correct</span>
                         {% else %}
                             <span class="text-danger">Incorrect</span>
                         {% endif %}
+                        {% endwith %}
                     </li>
                 {% endfor %}
             </ul>
